@@ -1,0 +1,31 @@
+{
+    "name": "teamnovu/graphql-breadcrumbs",
+    "description": "Graphql Breadcrumbs is an addon for Statamic that enhances entry types with breadcrumbs, offering flexibility and ease of navigation.",
+    "autoload": {
+        "psr-4": {
+            "Teamnovu\\GraphqlBreadcrumbs\\": "src"
+        }
+    },
+    "authors": [
+        {
+            "name": "Kyle Werner"
+        }
+    ],
+    "support": {
+        "email": "developers@novu.ch"
+    },
+    "extra": {
+        "statamic": {
+            "name": "Graphql Breadcrumbs",
+            "description": "Graphql Breadcrumbs is an addon for Statamic that enhances entry types with breadcrumbs."
+        },
+        "laravel": {
+            "providers": [
+                "Teamnovu\\GraphqlBreadcrumbs\\ServiceProvider"
+            ]
+        }
+    },
+    "require": {
+        "statamic/cms": "^4.0"
+    }
+}

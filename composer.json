@@ -1,6 +1,7 @@
 {
     "name": "teamnovu/graphql-breadcrumbs",
     "description": "Graphql Breadcrumbs is an addon for Statamic that enhances entry types with breadcrumbs, offering flexibility and ease of navigation.",
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "Teamnovu\\GraphqlBreadcrumbs\\": "src"

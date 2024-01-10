@@ -16,4 +16,4 @@ To install this addon, go to the `Tools > Addons` section in the Statamic contro
 
 ```bash
 composer require teamnovu/graphql-breadcrumbs
-
+```

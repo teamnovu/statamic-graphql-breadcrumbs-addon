@@ -22,9 +22,8 @@ class BreadcrumbService
             $breadcrumbs = self::getParentPagesFromNavigation($args['use_navigation_structure'], $entry);
         }
 
-         // get the structure from collection
-        if (!$breadcrumbs)
-        {
+        // get the structure from collection
+        if (!$breadcrumbs) {
             $breadcrumbs = self::getParentPages($entry);
 
             // check for mounting page and if so get parent pages of it as well
@@ -63,18 +62,20 @@ class BreadcrumbService
             'url' => $entry->url,
             'permalink' => $entry->permalink,
             'blueprint' => $entry->blueprint->handle,
+            'entry' => $entry,
         ];
 
         // parent pages
         while ($entry->parent) {
             $parent = $entry->parent;
             $breadcrumbs[] = [
-                'id' => $entry->id(),
+                'id' => $parent->id(),
                 'title' => $parent->title,
                 'slug' => $parent->slug,
                 'url' => $parent->url,
                 'permalink' => $parent->permalink,
                 'blueprint' => $parent->blueprint->handle,
+                'entry' => $parent->entry(),
             ];
 
             $entry = $parent;
@@ -122,6 +123,7 @@ class BreadcrumbService
                     'url' => $entryObject->url,
                     'permalink' => $entryObject->permalink,
                     'blueprint' => $entryObject->blueprint->handle,
+                    'entry' => $entryObject,
                 ];
             } else {
                 $breadcrumbs[] = [
@@ -131,9 +133,9 @@ class BreadcrumbService
                     'url' => $branch['url'],
                     'permalink' => $branch['url'],
                     'blueprint' => null,
+                    'entry' => null,
                 ];
             }
-
         }
 
         // if no breadcrumbs found, return empty array
@@ -155,6 +157,7 @@ class BreadcrumbService
                 'url' => $homepage->url,
                 'permalink' => $homepage->permalink,
                 'blueprint' => $homepage->blueprint->handle,
+                'entry' => $homepage,
             ];
 
             array_unshift($breadcrumbs, $homepageArray);
@@ -218,5 +221,4 @@ class BreadcrumbService
         }
         return $flattened;
     }
-
 }

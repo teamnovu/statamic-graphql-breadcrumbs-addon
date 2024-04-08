@@ -19,10 +19,10 @@ class Breadcrumb extends GraphQLType
     {
         return [
             'id' => [
-                'type' =>GraphQL::string(),
+                'type' => GraphQL::string(),
             ],
             'slug' => [
-                'type' =>GraphQL::string(),
+                'type' => GraphQL::string(),
             ],
             'title' => [
                 'type' => GraphQL::nonNull(GraphQL::string()),
@@ -35,6 +35,9 @@ class Breadcrumb extends GraphQLType
             ],
             'blueprint' => [
                 'type' => GraphQL::string(),
+            ],
+            'entry' => [
+                'type' => GraphQL::type('EntryInterface'),
             ],
         ];
     }

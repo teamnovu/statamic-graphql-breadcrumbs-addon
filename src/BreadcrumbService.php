@@ -37,13 +37,32 @@ class BreadcrumbService
                 if ($args['get_full_path_of_mount_page'] ?? false) {
                     $breadcrumbs = array_merge($mountPageBreadcrumbs, $breadcrumbs);
                 } else {
-                    array_unshift($breadcrumbs, $mountEntry); // add mount
+                    array_unshift($breadcrumbs, self::mapBreadcrumbEntry($mountEntry)); // add mount
                     array_unshift($breadcrumbs, $mountPageBreadcrumbs[0]); // add top level page of mount e.g. "home"
                 }
             }
         }
 
         return $breadcrumbs;
+    }
+
+    /**
+     * Maps an Entry object to an associative array for breadcrumb navigation.
+     *
+     * @param Entry $entry The Entry object to be mapped.
+     * @return array An associative array containing essential properties for breadcrumb links.
+     */
+    private static function mapBreadcrumbEntry(Entry $entry): array
+    {
+        return [
+            'id' => $entry->id(),
+            'title' => $entry->title,
+            'slug' => $entry->slug,
+            'url' => $entry->url,
+            'permalink' => $entry->permalink,
+            'blueprint' => $entry->blueprint->handle,
+            'entry' => $entry,
+        ];
     }
 
     /**
@@ -55,15 +74,7 @@ class BreadcrumbService
     public static function getParentPages(Entry $entry)
     {
         // current page
-        $breadcrumbs[] = [
-            'id' => $entry->id(),
-            'title' => $entry->title,
-            'slug' => $entry->slug,
-            'url' => $entry->url,
-            'permalink' => $entry->permalink,
-            'blueprint' => $entry->blueprint->handle,
-            'entry' => $entry,
-        ];
+        $breadcrumbs[] = self::mapBreadcrumbEntry($entry);
 
         // parent pages
         while ($entry->parent) {
@@ -116,15 +127,7 @@ class BreadcrumbService
             if (isset($branch['entry'])) {
                 $entryObject = Entry::find($branch['entry']);
 
-                $breadcrumbs[] = [
-                    'id' => $entryObject->id(),
-                    'title' => $entryObject->title,
-                    'slug' => $entryObject->slug,
-                    'url' => $entryObject->url,
-                    'permalink' => $entryObject->permalink,
-                    'blueprint' => $entryObject->blueprint->handle,
-                    'entry' => $entryObject,
-                ];
+                $breadcrumbs[] = self::mapBreadcrumbEntry($entryObject);
             } else {
                 $breadcrumbs[] = [
                     'id' => null,
@@ -151,14 +154,7 @@ class BreadcrumbService
 
         // Add the homepage to the beginning of the breadcrumbs
         if ($homepage) {
-            $homepageArray = [
-                'title' => $homepage->title,
-                'slug' => $homepage->slug,
-                'url' => $homepage->url,
-                'permalink' => $homepage->permalink,
-                'blueprint' => $homepage->blueprint->handle,
-                'entry' => $homepage,
-            ];
+            $homepageArray = self::mapBreadcrumbEntry($homepage);
 
             array_unshift($breadcrumbs, $homepageArray);
         }

@@ -27,8 +27,8 @@ class BreadcrumbService
             $breadcrumbs = self::getParentPages($entry);
 
             // check for mounting page and if so get parent pages of it as well
-            if ($entry->collection->mount() !== null) {
-                $mountEntry = $entry->collection->mount()->in($entry->locale());
+            if ($entry->collection()->mount() !== null) {
+                $mountEntry = $entry->collection()->mount()->in($entry->locale());
             }
 
             if (isset($mountEntry)) {
@@ -77,8 +77,8 @@ class BreadcrumbService
         $breadcrumbs[] = self::mapBreadcrumbEntry($entry);
 
         // parent pages
-        while ($entry->parent) {
-            $parent = $entry->parent;
+        while ($entry->parent()) {
+            $parent = $entry->parent();
             $breadcrumbs[] = [
                 'id' => $parent->id(),
                 'title' => $parent->title,

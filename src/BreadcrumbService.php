@@ -148,8 +148,8 @@ class BreadcrumbService
 
         // Get the Homepage entry
         $homepage = Entry::query()
-            ->where('url', '/')
-            ->where('locale', $entry->locale())
+            ->where('uri', '/')
+            ->where('site', $entry->locale())
             ->first();
 
         // Add the homepage to the beginning of the breadcrumbs
